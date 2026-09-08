@@ -667,7 +667,20 @@ h1 span {
     }
 
     .about-image {
+        position: relative;
         min-height: 350px;
+        background: linear-gradient(180deg,
+                rgba(120, 150, 170, .55) 0%,
+                rgba(0, 36, 58, .28) 100%),
+            url('../assets/sobre.jpg') center/cover no-repeat;
+    }
+
+    .about-image::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 24, 39, .18);
+        pointer-events: none;
     }
 
     .plans {

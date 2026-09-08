@@ -106,7 +106,7 @@
                     <div class="service-content">
                         <h3>${service.title}</h3>
                         <p>${service.description}</p>
-                        <a href="#contato" class="service-button">${service.button}</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeRDCTIMWvcsbYafsQsEGWKdosYG_bjASQQwLjuIg9ENn1oWQ/viewform?pli=1" class="service-button" target="_blank">${service.button}</a>
                     </div>
                 </div>
             `;
