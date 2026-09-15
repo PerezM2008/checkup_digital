@@ -82,13 +82,13 @@
             },
             {
                 title: 'Prevenção',
-                image: 'assets/adultos.jpg',
+                image: 'assets/prevencao.jpg',
                 description: 'Estratégias personalizadas para detectar riscos precocemente e manter seu cuidado em dia com acompanhamento constante.',
                 button: 'Pré-agendamento'
             },
             {
                 title: 'Check-up',
-                image: 'assets/saude-mulher.jpg',
+                image: 'assets/checkup.jpg',
                 description: 'Avaliação completa com foco em prevenção, diagnóstico e orientação para uma rotina de saúde mais segura.',
                 button: 'Pré-checkup'
             }
