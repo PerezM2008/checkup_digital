@@ -56,6 +56,8 @@
     }
 
     function initPartnersMarquee() {
+        const PARTNERS_SPEED = 15;
+
         const partnerConfig = [
             { name: 'Sr. Vinícius Pires', image: 'assets/viniciusbruno 1 (1).png', alt: 'Sr. Vinícius Pires', type: 'professional', specialty: 'Especialista em Exames Médicos e Anamnese' },
             { name: 'Dra. Maria Ap. Freitas', image: 'assets/mariaaparecida 1.png', alt: 'Dra. Maria Ap. Freitas', type: 'professional', specialty: 'Fonoaudióloga' },
@@ -64,34 +66,140 @@
             { name: 'Dra. Marcia Arizono', image: 'assets/marciaarizono 1.png', alt: 'Dra. Marcia Arizono', type: 'professional', specialty: 'Ginecologista e Obstetra' },
             { name: 'Dr. Alessio C. Mathias', image: 'assets/alessiomathias 1.png', alt: 'Dr. Alessio C. Mathias', type: 'professional', specialty: 'Medicina Esportiva' },
             { name: 'Sympor', image: 'assets/sympor.png', alt: 'Sympor', type: 'professional', specialty: 'Soroterapia e Terapias Injetáveis' },
-            { name: 'Hosp. Sírio Libanês', image: 'assets/siriolibanes 1.png', alt: 'Hospital Sírio Libanês', type: 'professional', specialty:'Saúde, Laboratórios, Diagnósticos, Oncologia, Imunização e Especialidades Médicas' },
-            { name: 'Enjoy Institute', image: 'assets/enjoie.png', alt: 'Enjoy Institute', type: 'professional', specialty:'Medicina Esportiva, Longevidade e Estética' },
+            { name: 'Hosp. Sírio Libanês', image: 'assets/siriolibanes 1.png', alt: 'Hospital Sírio Libanês', type: 'professional', specialty: 'Laboratórios, Diagnósticos e Oncologia' },
+            { name: 'Enjoy Institute', image: 'assets/enjoie.png', alt: 'Enjoy Institute', type: 'professional', specialty: 'Medicina Esportiva, Longevidade e Estética' }
         ];
 
-        const trackNodes = [
-            document.getElementById('partners-track-forward'),
-            document.getElementById('partners-track-reverse')
-        ].filter(Boolean);
+        const forwardTrack = document.getElementById('partners-track-forward');
+        const reverseTrack = document.getElementById('partners-track-reverse');
 
-        if (!trackNodes.length) return;
+        if (!forwardTrack || !reverseTrack) return;
 
         const buildPartnerCard = (partner) => {
             const article = document.createElement('article');
             article.className = 'partner-item';
-            const specialtyMarkup = partner.specialty ? `<span class="partner-specialty">${partner.specialty}</span>` : '<span class="partner-specialty" aria-hidden="true"></span>';
+            const specialtyMarkup = partner.specialty
+                ? `<span class="partner-specialty">${partner.specialty}</span>`
+                : '<span class="partner-specialty" aria-hidden="true"></span>';
+
             article.innerHTML = `
                 <div class="partner-image-wrap">
                     <img src="${partner.image}" alt="${partner.alt}" loading="lazy" class="${partner.type === 'institutional' ? 'partner-logo' : 'partner-photo'}">
                 </div>
-                <strong class="partner-name">${partner.name}</strong>
-                ${specialtyMarkup}
+                <div class="partner-copy">
+                    <strong class="partner-name">${partner.name}</strong>
+                    ${specialtyMarkup}
+                </div>
             `;
             return article;
         };
 
-        const content = partnerConfig.map(buildPartnerCard);
-        trackNodes.forEach(track => {
-            content.forEach(card => track.appendChild(card.cloneNode(true)));
+        const buildSequence = (items) => {
+            const sequence = document.createElement('div');
+            sequence.className = 'partners-sequence';
+            items.forEach(partner => sequence.appendChild(buildPartnerCard(partner)));
+            return sequence;
+        };
+
+        const firstSequence = buildSequence(partnerConfig);
+        const secondSequence = buildSequence(partnerConfig);
+
+        forwardTrack.appendChild(firstSequence);
+        forwardTrack.appendChild(secondSequence.cloneNode(true));
+
+        const reverseFirstSequence = buildSequence(partnerConfig);
+        const reverseSecondSequence = buildSequence(partnerConfig);
+
+        reverseTrack.appendChild(reverseFirstSequence);
+        reverseTrack.appendChild(reverseSecondSequence);
+
+        const normalizePartnerCards = () => {
+            document.querySelectorAll('#parceiros .partner-item').forEach(item => {
+                item.style.width = '150px';
+                item.style.minWidth = '150px';
+                item.style.height = '200px';
+                item.style.display = 'flex';
+                item.style.flexDirection = 'column';
+                item.style.alignItems = 'center';
+                item.style.justifyContent = 'flex-start';
+                item.style.textAlign = 'center';
+                item.style.gap = '10px';
+                item.style.padding = '12px 8px 8px';
+                item.style.flexShrink = '0';
+                item.style.overflow = 'hidden';
+
+                const imageWrap = item.querySelector('.partner-image-wrap');
+                if (imageWrap) {
+                    imageWrap.style.width = '72px';
+                    imageWrap.style.height = '72px';
+                    imageWrap.style.display = 'flex';
+                    imageWrap.style.alignItems = 'center';
+                    imageWrap.style.justifyContent = 'center';
+                    imageWrap.style.overflow = 'hidden';
+                    imageWrap.style.borderRadius = '50%';
+                }
+
+                const copy = item.querySelector('.partner-copy');
+                if (copy) {
+                    copy.style.width = '100%';
+                    copy.style.height = '100px';
+                    copy.style.display = 'flex';
+                    copy.style.flexDirection = 'column';
+                    copy.style.alignItems = 'center';
+                    copy.style.justifyContent = 'flex-start';
+                    copy.style.textAlign = 'center';
+                    copy.style.gap = '8px';
+                    copy.style.overflow = 'hidden';
+                }
+
+                const name = item.querySelector('.partner-name');
+                if (name) {
+                    name.style.width = '100%';
+                    name.style.minHeight = '42px';
+                    name.style.display = 'flex';
+                    name.style.alignItems = 'center';
+                    name.style.justifyContent = 'center';
+                    name.style.lineHeight = '1.3';
+                }
+
+                const specialty = item.querySelector('.partner-specialty');
+                if (specialty) {
+                    specialty.style.width = '100%';
+                    specialty.style.minHeight = '48px';
+                    specialty.style.display = 'flex';
+                    specialty.style.alignItems = 'center';
+                    specialty.style.justifyContent = 'center';
+                    specialty.style.lineHeight = '1.35';
+                    specialty.style.overflow = 'hidden';
+                }
+            });
+        };
+
+        normalizePartnerCards();
+
+        forwardTrack.classList.add('partners-track-right');
+        reverseTrack.classList.add('partners-track-left');
+
+        const applyPartnersSpeed = () => {
+            const tracks = [forwardTrack, reverseTrack];
+
+            tracks.forEach(track => {
+                const sequence = track.querySelector('.partners-sequence');
+                if (!sequence) return;
+
+                const sequenceWidth = sequence.getBoundingClientRect().width;
+                const duration = sequenceWidth / PARTNERS_SPEED;
+                track.style.setProperty('--partners-duration', `${duration.toFixed(2)}s`);
+            });
+        };
+
+        applyPartnersSpeed();
+        window.addEventListener('load', applyPartnersSpeed, { once: true });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(applyPartnersSpeed, 80);
         });
     }
 
