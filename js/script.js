@@ -55,6 +55,46 @@
         revealItems.forEach(element => observer.observe(element));
     }
 
+    function initPartnersMarquee() {
+        const partnerConfig = [
+            { name: 'Sr. Vinícius Pires', image: 'assets/viniciusbruno 1 (1).png', alt: 'Sr. Vinícius Pires', type: 'professional', specialty: 'Especialista em Exames Médicos e Anamnese' },
+            { name: 'Dra. Maria Ap. Freitas', image: 'assets/mariaaparecida 1.png', alt: 'Dra. Maria Ap. Freitas', type: 'professional', specialty: 'Fonoaudióloga' },
+            { name: 'Dr. Euler Kernbichler', image: 'assets/eulerkenrbichler 1.png', alt: 'Dr. Euler Kernbichler', type: 'professional', specialty: 'Pediatra e Neonatologista' },
+            { name: 'Dra. Mariana Lima', image: 'assets/marianalima 1.png', alt: 'Dra. Mariana Lima', type: 'professional', specialty: 'Fisioterapeuta' },
+            { name: 'Dra. Marcia Arizono', image: 'assets/marciaarizono 1.png', alt: 'Dra. Marcia Arizono', type: 'professional', specialty: 'Ginecologista e Obstetra' },
+            { name: 'Dr. Alessio C. Mathias', image: 'assets/alessiomathias 1.png', alt: 'Dr. Alessio C. Mathias', type: 'professional', specialty: 'Medicina Esportiva' },
+            { name: 'Sympor', image: 'assets/sympor.png', alt: 'Sympor', type: 'professional', specialty: 'Soroterapia e Terapias Injetáveis' },
+            { name: 'Hosp. Sírio Libanês', image: 'assets/siriolibanes 1.png', alt: 'Hospital Sírio Libanês', type: 'professional', specialty:'Saúde, Laboratórios, Diagnósticos, Oncologia, Imunização e Especialidades Médicas' },
+            { name: 'Enjoy Institute', image: 'assets/enjoie.png', alt: 'Enjoy Institute', type: 'professional', specialty:'Medicina Esportiva, Longevidade e Estética' },
+        ];
+
+        const trackNodes = [
+            document.getElementById('partners-track-forward'),
+            document.getElementById('partners-track-reverse')
+        ].filter(Boolean);
+
+        if (!trackNodes.length) return;
+
+        const buildPartnerCard = (partner) => {
+            const article = document.createElement('article');
+            article.className = 'partner-item';
+            const specialtyMarkup = partner.specialty ? `<span class="partner-specialty">${partner.specialty}</span>` : '<span class="partner-specialty" aria-hidden="true"></span>';
+            article.innerHTML = `
+                <div class="partner-image-wrap">
+                    <img src="${partner.image}" alt="${partner.alt}" loading="lazy" class="${partner.type === 'institutional' ? 'partner-logo' : 'partner-photo'}">
+                </div>
+                <strong class="partner-name">${partner.name}</strong>
+                ${specialtyMarkup}
+            `;
+            return article;
+        };
+
+        const content = partnerConfig.map(buildPartnerCard);
+        trackNodes.forEach(track => {
+            content.forEach(card => track.appendChild(card.cloneNode(true)));
+        });
+    }
+
     function initInfiniteCarousel() {
         const carousel = document.querySelector('.services-carousel');
         const track = document.querySelector('.services-track');
@@ -262,5 +302,6 @@
     initMobileMenu();
     initSectionObserver();
     initAnimations();
+    initPartnersMarquee();
     initInfiniteCarousel();
 })();

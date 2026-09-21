@@ -450,60 +450,87 @@ h1 span {
 
 .partners {
     min-height: 100vh;
-    padding: 90px 7vw 80px;
-    background: linear-gradient(rgba(16, 43, 65, .77), rgba(16, 43, 65, .88)), url('../assets/parceiros.jpg') center/cover;
+    padding: 92px 0 88px;
+    background: linear-gradient(rgba(16, 43, 65, .78), rgba(16, 43, 65, .88)), url('../assets/parceiros.jpg') center/cover no-repeat;
     scroll-snap-align: start;
+    position: relative;
 }
 
-.partner-grid {
-    max-width: 930px;
-    margin: 55px auto 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 43px 24px;
-}
-
-.partner {
+.partners-marquee {
+    max-width: 1280px;
+    margin: 52px auto 0;
+    padding: 0 6vw;
     display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.partners-row {
+    position: relative;
+    overflow: hidden;
+}
+
+.partners-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: nowrap;
+    width: 100%;
     min-width: 0;
+}
+
+.partner-item {
+    flex: 0 0 auto;
+    width: clamp(142px, 13vw, 190px);
+    min-height: 170px;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    justify-content: center;
     text-align: center;
+    gap: 10px;
+    padding: 14px 10px;
 }
 
-.partner img,
-.partner-mark {
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.partner-mark {
+.partner-image-wrap {
+    width: clamp(64px, 5vw, 86px);
+    height: clamp(64px, 5vw, 86px);
     display: grid;
     place-items: center;
-    background: #e9eced;
-    color: #164f70;
-    font-size: 24px;
-    font-weight: 800;
+    overflow: hidden;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12);
 }
 
-.partner-mark-dark {
-    background: #050505;
-    color: #8dc1e8;
+.partner-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.partner-mark-blue {
-    background: #0d67a0;
-    color: white;
-    font-size: 18px;
+.partner-logo {
+    object-fit: contain;
+    background: rgba(255, 255, 255, .9);
+    border-radius: 18px;
 }
 
-.partner strong {
-    font-size: 11px;
+.partner-name {
+    font-size: clamp(12px, 1vw, 16px);
     line-height: 1.3;
+    color: var(--white);
+    letter-spacing: .01em;
 }
+
+.partner-specialty {
+    min-height: 1.2em;
+    font-size: clamp(10px, .82vw, 12px);
+    line-height: 1.3;
+    color: rgba(255, 255, 255, .75);
+}
+
 
 .contact {
     display: grid;
@@ -643,6 +670,8 @@ h1 span {
     }
 
     .hero {
+        display: flex;
+        justify-content: center;
         min-height: 690px;
         padding: 95px 28px 55px;
         align-items: flex-end;
@@ -650,6 +679,7 @@ h1 span {
     }
 
     .hero h1 {
+        text-align: left;
         font-size: clamp(32px, 10vw, 48px);
     }
 
