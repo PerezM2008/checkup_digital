@@ -348,13 +348,25 @@
         };
 
         carousel.addEventListener('pointerdown', event => {
+            // Não iniciar o arraste quando o usuário estiver clicando em um botão/link
+            const button = event.target.closest('.service-button');
+
+            if (button) {
+                return;
+            }
+
             if (event.pointerType === 'mouse' && event.button !== 0) return;
+
             beginDrag(event.clientX);
-            if (typeof carousel.setPointerCapture === 'function' && Number.isInteger(event.pointerId)) {
+
+            if (
+                typeof carousel.setPointerCapture === 'function' &&
+                Number.isInteger(event.pointerId)
+            ) {
                 try {
                     carousel.setPointerCapture(event.pointerId);
                 } catch (error) {
-                    // Some synthetic or browser-specific pointer sequences do not expose a valid capture target.
+                    // Ignora erros de captura do ponteiro
                 }
             }
         });
@@ -383,15 +395,16 @@
 
         carousel.addEventListener('click', event => {
             const button = event.target.closest('.service-button');
-            if (button && shouldBlockClick) {
-                event.preventDefault();
-                event.stopPropagation();
+
+            // Links dos serviços devem funcionar normalmente
+            if (button) {
                 return;
             }
 
             if (window.matchMedia('(pointer: coarse)').matches) {
                 const card = event.target.closest('.service-card');
-                if (card && !button) {
+
+                if (card) {
                     card.classList.toggle('is-open');
                 }
             }
